@@ -8,25 +8,31 @@ type animal struct {
 }
 
 func main() {
-	perro := inicializarAnimal("mateo", 2)
-	gato := inicializarAnimal("jhon", 3)
-	cambioNombre(perro)
-	cambioPatas(gato)
+	perro, mensaje := inicializarAnimal("mateo", 2)
+	if mensaje != "" {
+		fmt.Println("paso algo")
+	}
+	perro.cambioNombre("lola")
+	perro.cambioPatas(4)
 	fmt.Println(perro)
-	fmt.Println(gato)
+
 }
 
-func inicializarAnimal(nombre string, patas int) *animal { //retorna puntero
-	return &animal{
+func inicializarAnimal(nombre string, patas int) (animalito *animal, string2 string) { //retorna puntero
+	if patas > 4 {
+		return nil, "su animal tiene mas de 4 patas"
+	}
+	animalito = &animal{
 		patas:  patas,
 		nombre: nombre,
 	}
+	return
 }
 
-func cambioNombre(mascota *animal) { //recibe puntero animal
-	mascota.nombre = "koke"
+func (a *animal) cambioNombre(nombre string) { //recibe puntero animal
+	a.nombre = nombre
 }
 
-func cambioPatas(bestia *animal) {
-	bestia.patas = 4
+func (a *animal) cambioPatas(numeroPatas int) {
+	a.patas = numeroPatas
 }
