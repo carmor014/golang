@@ -5,32 +5,11 @@ import (
 )
 
 func main() {
-	x := make([]int, 10, 12)
-	fmt.Println(x)
-	fmt.Println(len(x))
-	fmt.Println(cap(x))
-	x[0] = 42
-	x[9] = 999
+	et := []string{"Eduar", "Tua", "Crossfit", "Baseball", "Montañismo"}
+	fmt.Println(et)
+	jl := []string{"Jacinto", "Lopez", "Correr", "Nadar", "Bailar"}
+	fmt.Println(jl)
 
-	fmt.Println(x)
-	fmt.Println(len(x))
-	fmt.Println(cap(x))
-
-	x = append(x, 3423)
-
-	fmt.Println(x)
-	fmt.Println(len(x))
-	fmt.Println(cap(x))
-
-	x = append(x, 3424)
-
-	fmt.Println(x)
-	fmt.Println(len(x))
-	fmt.Println(cap(x))
-
-	x = append(x, 3425)
-
-	fmt.Println(x)
-	fmt.Println(len(x))
-	fmt.Println(cap(x))
+	vp := [][]string{et, jl}
+	fmt.Println(vp)
 }
