@@ -5,8 +5,12 @@ import (
 )
 
 func main() {
-	x := "Batman"
-	if x == "Batman" {
+	x := "Rsdfg"
+	if x == "Robin" {
 		fmt.Println(x)
+	} else if x == "Batman" {
+		fmt.Println("batbatbat", x)
+	} else {
+		fmt.Println("Ningún súper héroe")
 	}
 }
