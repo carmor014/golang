@@ -3,29 +3,18 @@ package main
 import "fmt"
 
 func main() {
-	foo()
-	bar("James")
-	s1 := woo("Mooneypenny")
-	fmt.Println(s1)
-	x, y := saludar("Carlos", "Mora")
+	x := sum(2, 3, 4, 5, 6, 7, 8, 9)
+	fmt.Println("El valor total almacenado en la varible es:", x)
+}
+
+func sum(x ...int) int {
 	fmt.Println(x)
-	fmt.Println(y)
-}
+	fmt.Printf("%T\n", x)
 
-func foo() {
-	fmt.Println("Hola desde foo")
-}
-
-func bar(s string) {
-	fmt.Println("Hola,", s)
-}
-
-func woo(s string) string {
-	return fmt.Sprint("Hola desde woo,", s)
-}
-
-func saludar(n string, a string) (string, bool) {
-	p := fmt.Sprint(n, " ", a, " dice ")
-	q := true
-	return p, q
+	suma := 0
+	for i, v := range x {
+		suma += v
+		fmt.Println("El valor en el indice", i, "suma", v, "altotal, quedando", suma)
+	}
+	return suma
 }
