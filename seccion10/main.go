@@ -4,43 +4,40 @@ import (
 	"fmt"
 )
 
-type persona struct {
-	nombre     string
-	apellido   string
-	saboresFav []string
+type vehiculo struct {
+	puertas int
+	color   string
+}
+
+type camion struct {
+	vehiculo
+	cuatroRuedas bool
+}
+
+type sedan struct {
+	vehiculo
+	lujoso bool
 }
 
 func main() {
-	p1 := persona{
-		nombre:   "Eduar",
-		apellido: "Tua",
-		saboresFav: []string{
-			"chocolate",
-			"mantecado",
-			"torta suiza",
+	c := camion{
+		vehiculo: vehiculo{
+			puertas: 2,
+			color:   "blanco",
 		},
-	}
-	p2 := persona{
-		nombre:   "Condor",
-		apellido: "Pérez",
-		saboresFav: []string{
-			"fresa",
-			"vainilla",
-			"limón",
-		},
+		cuatroRuedas: true,
 	}
 
-	m := map[string]persona{
-		p1.apellido: p1,
-		p2.apellido: p2,
+	s := sedan{
+		vehiculo: vehiculo{
+			puertas: 4,
+			color:   "negro",
+		},
+		lujoso: false,
 	}
 
-	for _, v := range m {
-		fmt.Println(v.nombre)
-		fmt.Println(v.apellido)
-		for i, v := range v.saboresFav {
-			fmt.Println(" ", i, v)
-		}
-		fmt.Println("-------")
-	}
+	fmt.Println(c)
+	fmt.Println(s)
+	fmt.Println(c.puertas)
+	fmt.Println(s.puertas)
 }
