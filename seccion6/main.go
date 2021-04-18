@@ -3,7 +3,13 @@ package main
 import "fmt"
 
 func main() {
-	for i := 33; i <= 122; i++ {
-		fmt.Printf("%v\t%#x\t%#U\n", i, i, i)
+	if x := 42; x == 42 {
+		fmt.Println("001")
 	}
+
+	y := 30
+	if y == 30 {
+		fmt.Println(y)
+	}
+	fmt.Println(y)
 }
