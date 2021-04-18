@@ -5,12 +5,7 @@ import (
 )
 
 func main() {
-	bd := 1989
-	for {
-		if bd > 2017 {
-			break
-		}
-		fmt.Println(bd)
-		bd++
+	for i := 10; i <= 100; i++ {
+		fmt.Printf("Cuando dividimos %v entre 4, el resto (también módulo) es %v\n", i, i%4)
 	}
 }
