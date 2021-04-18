@@ -4,40 +4,33 @@ import (
 	"fmt"
 )
 
-type vehiculo struct {
-	puertas int
-	color   string
-}
-
-type camion struct {
-	vehiculo
-	cuatroRuedas bool
-}
-
-type sedan struct {
-	vehiculo
-	lujoso bool
-}
-
 func main() {
-	c := camion{
-		vehiculo: vehiculo{
-			puertas: 2,
-			color:   "blanco",
+
+	s := struct {
+		nombre     string
+		amigos     map[string]int
+		bebidasFav []string
+	}{
+		nombre: "Eduar",
+		amigos: map[string]int{
+			"Carito":  222,
+			"Adriana": 444,
+			"Condor":  666,
 		},
-		cuatroRuedas: true,
+		bebidasFav: []string{
+			"agua",
+			"chicha",
+		},
+	}
+	fmt.Println(s.nombre)
+	fmt.Println(s.amigos)
+	fmt.Println(s.bebidasFav)
+
+	for k, v := range s.amigos {
+		fmt.Println(k, v)
 	}
 
-	s := sedan{
-		vehiculo: vehiculo{
-			puertas: 4,
-			color:   "negro",
-		},
-		lujoso: false,
+	for i, val := range s.bebidasFav {
+		fmt.Println(i, val)
 	}
-
-	fmt.Println(c)
-	fmt.Println(s)
-	fmt.Println(c.puertas)
-	fmt.Println(s.puertas)
 }
