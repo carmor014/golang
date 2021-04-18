@@ -5,10 +5,13 @@ import (
 )
 
 func main() {
-	switch {
-	case false:
-		fmt.Println("No debería imprimir")
-	case true:
-		fmt.Println("Debería imprimir")
+	deporteFav := "béisbol"
+	switch deporteFav {
+	case "béisbol":
+		fmt.Println("Ve al estadio")
+	case "natación":
+		fmt.Println("Ve a la piscina")
+	case "crossfit":
+		fmt.Println("Te quiero ver en los crossfit games.")
 	}
 }
