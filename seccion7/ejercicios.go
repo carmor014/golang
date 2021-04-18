@@ -1,11 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
-	na := 1989
-	for na <= 2021 {
-		fmt.Println(na)
-		na++
+	bd := 1989
+	for {
+		if bd > 2017 {
+			break
+		}
+		fmt.Println(bd)
+		bd++
 	}
 }
