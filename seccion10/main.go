@@ -6,17 +6,19 @@ type persona struct {
 	nombre   string
 	apellido string
 }
+type agenteSecreto struct {
+	persona
+	licenciaParaMatar bool
+}
 
 func main() {
-	p1 := persona{
-		nombre:   "Eduar",
-		apellido: "tua",
+	as1 := agenteSecreto{
+		persona: persona{
+			nombre:   "Carlos",
+			apellido: "Mora",
+		},
+		licenciaParaMatar: true,
 	}
-	p2 := persona{
-		nombre:   "Carlos",
-		apellido: "Mora",
-	}
-	fmt.Println(p1, p2)
-	fmt.Println(p1.nombre)
-	fmt.Println(p2.apellido)
+	fmt.Println(as1)
+	fmt.Println(as1.persona, as1.nombre)
 }
