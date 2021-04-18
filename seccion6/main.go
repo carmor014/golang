@@ -1,11 +1,29 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
-	for i := 0; i <= 100; i++ {
-		if i%2 == 0 {
-			fmt.Println(i)
-		}
+	switch {
+	case 2 == 4:
+		fmt.Println("Esta no se debe imprimir2")
+	case 3 == 3:
+		fmt.Println("Imprime")
+		fallthrough
+	default:
+		fmt.Println("Este es default")
+	}
+
+	n := "Pera"
+	switch n {
+	case "Manzana", "Pera", "Mango":
+		fmt.Println("Varias frutas")
+	case "M":
+		fmt.Println("m")
+	case "Q":
+		fmt.Println("Esta es la q")
+	default:
+		fmt.Println("Esta es default")
 	}
 }
