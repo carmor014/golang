@@ -5,12 +5,10 @@ import (
 )
 
 func main() {
-	x := "Rsdfg"
-	if x == "Robin" {
-		fmt.Println(x)
-	} else if x == "Batman" {
-		fmt.Println("batbatbat", x)
-	} else {
-		fmt.Println("Ningún súper héroe")
+	switch {
+	case false:
+		fmt.Println("No debería imprimir")
+	case true:
+		fmt.Println("Debería imprimir")
 	}
 }
