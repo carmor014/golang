@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	x := [5]int{42, 43, 44, 45, 46}
+	x := []int{42, 43, 44, 45, 46}
 	for i, v := range x {
 		fmt.Println(i, v)
 	}
