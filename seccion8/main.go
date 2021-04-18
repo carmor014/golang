@@ -1,20 +1,24 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func main() {
-	x := []int{42, 43, 44, 45, 46, 47, 48, 49, 50, 51}
-	fmt.Println(x)
+	m := map[string]int{
+		"Batman": 32,
+		"Robin":  27,
+	}
+	fmt.Println(m)
 
-	y := append(x[:2], x[5:]...) // the same underlying array stores the value of the new slice
+	fmt.Println(m["Batman"])
 
-	fmt.Println(x)
-	fmt.Println("len", len(x))
-	fmt.Println("cap", cap(x))
+	fmt.Println(m["Eduar"])
 
-	fmt.Println(y)
-	fmt.Println("len", len(y))
-	fmt.Println("cap", cap(y))
+	v, ok := m["Eduar"]
+	fmt.Println(v)
+	fmt.Println(ok)
+
+	if v, ok := m["Eduar"]; ok {
+		fmt.Println("Impresión desde el if", v)
+	}
+
 }
