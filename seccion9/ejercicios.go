@@ -5,18 +5,18 @@ import (
 )
 
 func main() {
-	xs1 := []string{"Batman", "Jefe", "Vestido de negro"}
-	xs2 := []string{"Robin", "Ayudante", "Vestido de colores"}
-	fmt.Println(xs1)
-	fmt.Println(xs2)
+	x := map[string][]string{
+		`eduar_tua`:    []string{`computadoras`, `montañas`, `playa`},
+		`carlos_ramon`: []string{`leer`, `comprar`, `música`},
+		`juan_bimba`:   []string{`helado`, `pintar`, `bailar`},
+	}
 
-	xxs := [][]string{xs1, xs2}
-	fmt.Println(xxs)
+	// fmt.Println(m)
 
-	for i, reg := range xxs {
-		fmt.Println("Registro: ", i)
-		for j, val := range reg {
-			fmt.Printf("\tíndice de posición: %v\tvalor: \t %v \n", j, val)
+	for llave, valor := range x {
+		fmt.Println("Registro:", llave)
+		for i, val := range valor {
+			fmt.Println("\t", i, val)
 		}
 	}
 }
