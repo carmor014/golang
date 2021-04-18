@@ -1,24 +1,19 @@
 package main
 
-import "fmt"
-
-type persona struct {
-	nombre   string
-	apellido string
-}
-type agenteSecreto struct {
-	persona
-	licenciaParaMatar bool
-}
+import (
+	"fmt"
+)
 
 func main() {
-	as1 := agenteSecreto{
-		persona: persona{
-			nombre:   "Carlos",
-			apellido: "Mora",
-		},
-		licenciaParaMatar: true,
+	p1 := struct {
+		first string
+		last  string
+		age   int
+	}{
+		first: "Eduar",
+		last:  "Tua",
+		age:   31,
 	}
-	fmt.Println(as1)
-	fmt.Println(as1.persona, as1.nombre)
+
+	fmt.Println(p1)
 }
