@@ -13,6 +13,8 @@ func main() {
 
 	// fmt.Println(m)
 
+	x[`luis_perez`] = []string{`trabajar`, `playa`, `cerveza`}
+
 	for llave, valor := range x {
 		fmt.Println("Registro:", llave)
 		for i, val := range valor {
