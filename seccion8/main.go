@@ -1,9 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
-	var x [5]int
+	//tipo{elementos} //COMPOSITE LITERAL
+	x := []int{1, 2, 3, 4, 5}
 	fmt.Println(x)
-	fmt.Println(len(x))
+	fmt.Printf("%T", x)
 }
+
+//Usamos slices para agrupar VALORES del mismo TIPO
