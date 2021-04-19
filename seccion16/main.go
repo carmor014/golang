@@ -5,20 +5,31 @@ import (
 	"fmt"
 )
 
-//ejemplo de json a tipo
+type persona struct {
+	Nombre   string
+	Apellido string
+	Edad     int
+}
+
 func main() {
-	var jsonBlob = []byte(`[
-	{"Name": "Platypus", "Order": "Monotremata"},
-	{"Name": "Quoll",    "Order": "Dasyuromorphia"}
-]`)
-	type Animal struct {
-		Name  string
-		Order string
+	p1 := persona{
+		Nombre:   "James",
+		Apellido: "Bond",
+		Edad:     32,
 	}
-	var animals []Animal
-	err := json.Unmarshal(jsonBlob, &animals)
+
+	p2 := persona{
+		Nombre:   "Peggy",
+		Apellido: "Bond",
+		Edad:     32,
+	}
+
+	personas := []persona{p1, p2}
+	fmt.Println(personas)
+
+	bs, err := json.Marshal(personas)
 	if err != nil {
-		fmt.Println("error:", err)
+		fmt.Println(err)
 	}
-	fmt.Printf("%+v", animals)
+	fmt.Println(string(bs))
 }
