@@ -6,30 +6,31 @@ import (
 )
 
 type persona struct {
-	Nombre   string
-	Apellido string
-	Edad     int
+	Nombre   string `json:"Nombre"`
+	Apellido string `json:"Apellido"`
+	Edad     int    `json:"Edad"`
 }
 
 func main() {
-	p1 := persona{
-		Nombre:   "James",
-		Apellido: "Bond",
-		Edad:     32,
-	}
+	s := `[{"Nombre":"James","Apellido":"Bond","Edad":32},{"Nombre":"Peggy","Apellido":"Bond","Edad":32}]`
+	bs := []byte(s)
 
-	p2 := persona{
-		Nombre:   "Peggy",
-		Apellido: "Bond",
-		Edad:     32,
-	}
+	fmt.Printf("%T\n", s)
+	fmt.Printf("%T\n", bs)
 
-	personas := []persona{p1, p2}
-	fmt.Println(personas)
+	//persona := []persona{}
+	var personas []persona
 
-	bs, err := json.Marshal(personas)
+	err := json.Unmarshal(bs, &personas)
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(string(bs))
+
+	fmt.Println("Toda la data", personas)
+
+	for i, v := range personas {
+		fmt.Println("\nPERSONA NUMERO", i+1)
+		fmt.Println(v.Nombre, v.Apellido, v.Edad)
+	}
+
 }
