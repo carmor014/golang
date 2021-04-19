@@ -1,19 +1,18 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
-	foo()
 
-	func() {
-		fmt.Println("La funcion es anonima")
-	}()
+	f := func() {
+		fmt.Println("Mi primera expresión función")
+	}
+	f()
 
-	func(x int) {
-		fmt.Println("La funcion es anonima con unparametro", x)
-	}(42)
-}
-
-func foo() {
-	fmt.Println("foo se ejecuto")
+	g := func(x int) {
+		fmt.Println("El año del descubrimiento de América fue:", x)
+	}
+	g(1492)
 }
