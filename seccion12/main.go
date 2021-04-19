@@ -1,18 +1,15 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func main() {
+	x := bar()
+	i := x()
+	fmt.Println(i)
+}
 
-	f := func() {
-		fmt.Println("Mi primera expresión función")
+func bar() func() int {
+	return func() int {
+		return 1492
 	}
-	f()
-
-	g := func(x int) {
-		fmt.Println("El año del descubrimiento de América fue:", x)
-	}
-	g(1492)
 }
