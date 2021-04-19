@@ -5,16 +5,27 @@ import (
 )
 
 func main() {
-	n := foo()
-	x, s := bar()
+	ii := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	n := foo(ii...)
+	fmt.Println(n)
 
-	fmt.Println(n, x, s)
+	ii2 := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	n2 := bar(ii2)
+	fmt.Println(n2)
 }
 
-func foo() int {
-	return 42
+func foo(xi ...int) int {
+	total := 0
+	for _, v := range xi {
+		total += v
+	}
+	return total
 }
 
-func bar() (int, string) {
-	return 1492, "Descubrimiento de América"
+func bar(xi []int) int {
+	total := 0
+	for _, v := range xi {
+		total += v
+	}
+	return total
 }
