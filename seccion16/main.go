@@ -3,24 +3,22 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"os"
 )
 
-//ejemplo de tipo a marshal
+//ejemplo de json a tipo
 func main() {
-	type ColorGroup struct {
-		ID     int
-		Name   string
-		Colors []string
+	var jsonBlob = []byte(`[
+	{"Name": "Platypus", "Order": "Monotremata"},
+	{"Name": "Quoll",    "Order": "Dasyuromorphia"}
+]`)
+	type Animal struct {
+		Name  string
+		Order string
 	}
-	group := ColorGroup{
-		ID:     1,
-		Name:   "Reds",
-		Colors: []string{"Crimson", "Red", "Ruby", "Maroon"},
-	}
-	b, err := json.Marshal(group)
+	var animals []Animal
+	err := json.Unmarshal(jsonBlob, &animals)
 	if err != nil {
 		fmt.Println("error:", err)
 	}
-	os.Stdout.Write(b)
+	fmt.Printf("%+v", animals)
 }
