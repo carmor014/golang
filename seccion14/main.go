@@ -1,19 +1,22 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
-	a := 42
-	fmt.Println(a)
-	fmt.Println(&a)
+	x := 0
+	fmt.Println("x befor", &x)
+	fmt.Println("x befor", x)
+	foo(&x)
+	fmt.Println("x after", &x)
+	fmt.Println("x after", x)
+}
 
-	fmt.Printf("%T\n", a)
-	fmt.Printf("%T\n", &a)
-
-	var b *int = &a
-	fmt.Println(b)
-	fmt.Println(*b)
-
-	*b = 43
-	fmt.Println(*b)
+func foo(y *int) {
+	fmt.Println("y befor", y)
+	fmt.Println("y befor", *y)
+	*y = 43
+	fmt.Println("y after", y)
+	fmt.Println("y after", *y)
 }
