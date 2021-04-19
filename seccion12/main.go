@@ -1,44 +1,24 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
-	ii := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	var x int
+	fmt.Println(x)
+	x++
 
-	s := suma(ii...)
-	fmt.Println(s)
+	{
+		y := 42
+		fmt.Println(y)
+	}
+	// fmt.Println(y)
 
-	s1 := sumaPares(suma, ii...)
-	fmt.Println("El total e pares es: ", s1)
-
-	s2 := sumaImpares(suma, ii...)
-	fmt.Println("El total e impares es: ", s2)
+	fmt.Println(x)
+	foo()
 }
 
-func suma(xi ...int) int {
-	total := 0
-	for _, v := range xi {
-		total += v
-	}
-	return total
-}
-
-func sumaPares(f func(xi ...int) int, vi ...int) int {
-	var y []int
-	for _, v := range vi {
-		if v%2 == 0 {
-			y = append(y, v)
-		}
-	}
-	return f(y...)
-}
-
-func sumaImpares(f func(xi ...int) int, vi ...int) int {
-	var y []int
-	for _, v := range vi {
-		if v%2 != 0 {
-			y = append(y, v)
-		}
-	}
-	return f(y...)
+func foo() {
+	fmt.Println("hello")
 }
