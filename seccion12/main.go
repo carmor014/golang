@@ -12,8 +12,23 @@ type agenteSecreto struct {
 	lpm bool
 }
 
-func (a agenteSecreto) presentarse() {
+func (a agenteSecreto) presentar() {
 	fmt.Println("soy", a.nombre, a.apellido)
+}
+
+func (p persona) presentar() {
+	fmt.Println("soy", p.nombre, p.apellido)
+}
+
+//decarar una interface
+type humano interface {
+	//solo agrego metodos
+	presentar()
+}
+
+//puede recibir persona o un agenteSecreto
+func bar(h humano) {
+	fmt.Println("fui pasado a la funcion bar", h)
 }
 
 func main() {
@@ -24,6 +39,23 @@ func main() {
 		},
 		lpm: true,
 	}
+	as2 := agenteSecreto{
+		persona: persona{
+			nombre:   "Maria",
+			apellido: "Guz",
+		},
+		lpm: true,
+	}
+	p := persona{
+		nombre:   "Carito",
+		apellido: "Gomez",
+	}
+
 	fmt.Println(as1)
-	as1.presentarse()
+	as1.presentar()
+	as2.presentar()
+
+	bar(as1)
+	bar(as2)
+	bar(p)
 }
