@@ -28,6 +28,12 @@ type humano interface {
 
 //puede recibir persona o un agenteSecreto
 func bar(h humano) {
+	switch h.(type) {
+	case persona:
+		fmt.Println("switch de persona: ", h.(persona).nombre)
+	case agenteSecreto:
+		fmt.Println("switch de persona: ", h.(agenteSecreto).nombre)
+	}
 	fmt.Println("fui pasado a la funcion bar", h)
 }
 
