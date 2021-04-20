@@ -2,12 +2,20 @@ package main
 
 import (
 	"fmt"
-	"io"
-	"os"
+	"sort"
 )
 
 func main() {
-	fmt.Println("Hello")
-	fmt.Fprintln(os.Stdout, "Hello")
-	io.WriteString(os.Stdout, "Hello")
+	xi := []int{4, 7, 3, 42, 99, 18, 16, 56, 12}
+	xs := []string{"James", "Q", "M", "Moneypenny", "Dr. No"}
+
+	fmt.Println(xi)
+	sort.Ints(xi)
+	fmt.Println(xi)
+
+	fmt.Println("------")
+	fmt.Println(xs)
+	sort.Strings(xs)
+	fmt.Println(xs)
+
 }
