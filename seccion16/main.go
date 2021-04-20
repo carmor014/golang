@@ -5,17 +5,26 @@ import (
 	"sort"
 )
 
+type Persona struct {
+	Nombre string
+	Edad   int
+}
+
+type PorEdad []Persona
+
+func (a PorEdad) Len() int           { return len(a) }
+func (a PorEdad) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a PorEdad) Less(i, j int) bool { return a[i].Edad < a[j].Edad }
+
 func main() {
-	xi := []int{4, 7, 3, 42, 99, 18, 16, 56, 12}
-	xs := []string{"James", "Q", "M", "Moneypenny", "Dr. No"}
+	p1 := Persona{"James", 32}
+	p2 := Persona{"Moneypenny", 27}
+	p3 := Persona{"Q", 64}
+	p4 := Persona{"M", 56}
 
-	fmt.Println(xi)
-	sort.Ints(xi)
-	fmt.Println(xi)
+	personas := []Persona{p1, p2, p3, p4}
 
-	fmt.Println("------")
-	fmt.Println(xs)
-	sort.Strings(xs)
-	fmt.Println(xs)
-
+	fmt.Println(personas)
+	sort.Sort(PorEdad(personas))
+	fmt.Println(personas)
 }
