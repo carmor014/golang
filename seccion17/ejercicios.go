@@ -3,9 +3,10 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 )
 
-type persona struct {
+type usuario struct {
 	Nombre   string
 	Apellido string
 	Edad     int
@@ -13,23 +14,46 @@ type persona struct {
 }
 
 func main() {
-	s := `[{"Nombre":"Eduar","Apellido":"Tua","Edad":32,"Dichos":["Cachicamo diciéndole a morrocoy conchudo","La mona, aunque se vista de seda, mona se queda","Poco a poco se anda lejos"]},{"Nombre":"Carlos","Apellido":"Pérez","Edad":27,"Dichos":["Camarón que se duerme se lo lleva la corriente","A ponerse las alpargatas que lo que viene es joropo","No gastes pólvora en zamuro"]},{"Nombre":"M","Apellido":"Hmmmm","Edad":54,"Dichos":["Ni lava ni presta la batea","Hijo de gato, caza ratón","Más vale pájaro en mano que cien volando"]}]`
-	fmt.Println(s)
+	u1 := usuario{
+		Nombre:   "Eduar",
+		Apellido: "Tua",
+		Edad:     32,
+		Dichos: []string{
+			"Cachicamo diciéndole a morrocoy conchudo",
+			"La mona, aunque se vista de seda, mona se queda",
+			"Poco a poco se anda lejos",
+		},
+	}
 
-	var personas []persona
+	u2 := usuario{
+		Nombre:   "Carlos",
+		Apellido: "Pérez",
+		Edad:     27,
+		Dichos: []string{
+			"Camarón que se duerme se lo lleva la corriente",
+			"A ponerse las alpargatas que lo que viene es joropo",
+			"No gastes pólvora en zamuro",
+		},
+	}
 
-	err := json.Unmarshal([]byte(s), &personas)
+	u3 := usuario{
+		Nombre:   "Che",
+		Apellido: "López",
+		Edad:     54,
+		Dichos: []string{
+			"Ni lava ni presta la batea",
+			"Hijo de gato, caza ratón",
+			"Más vale pájaro en mano que cien volando",
+		},
+	}
+
+	usuarios := []usuario{u1, u2, u3}
+
+	fmt.Println(usuarios)
+
+	err := json.NewEncoder(os.Stdout).Encode(usuarios)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Hicimos algo mal, este es el error:", err)
 	}
 
-	fmt.Println(personas)
-
-	for i, persona := range personas {
-		fmt.Println("Persona #", i+1)
-		fmt.Println("\t", persona.Nombre, persona.Apellido, persona.Edad)
-		for _, dichos := range persona.Dichos {
-			fmt.Println("\t\t", dichos)
-		}
-	}
 }
