@@ -1,33 +1,29 @@
 package main
 
-import (
-	"fmt"
-	"runtime"
-	"sync"
-)
+import "fmt"
+
+type persona struct {
+	nombre string
+}
+
+func (p *persona) hablar() {
+	fmt.Println("Hola soy", p.nombre)
+}
+
+type humano interface {
+	hablar()
+}
+
+func diAlgo(h humano) {
+	h.hablar()
+}
 
 func main() {
-	fmt.Printf("Número de CPUs al inicio: %v\n", runtime.NumCPU())
-	fmt.Printf("Número de Gorutinas al inicio: %v\n", runtime.NumGoroutine())
+	p1 := persona{
+		nombre: "Eduar",
+	}
 
-	var wg sync.WaitGroup
-	wg.Add(2)
-
-	go func() {
-		fmt.Println("Hola desde la primera Gorutina.")
-		wg.Done()
-	}()
-	go func() {
-		fmt.Println("Hola desde la segunda Gorutina.")
-		wg.Done()
-	}()
-
-	fmt.Printf("Número de CPUs en el medio: %v\n", runtime.NumCPU())
-	fmt.Printf("Número de Gorutinas en el medio: %v\n", runtime.NumGoroutine())
-
-	wg.Wait()
-
-	fmt.Println("A punto de finalizar main.")
-	fmt.Printf("Número de CPUs al final: %v\n", runtime.NumCPU())
-	fmt.Printf("Número de Gorutinas al final: %v\n", runtime.NumGoroutine())
+	//diAlgo(p1)
+	//diAlgo(&p1)
+	p1.hablar()
 }
