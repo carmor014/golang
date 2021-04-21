@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"runtime"
 	"sync"
 )
 
@@ -12,14 +11,16 @@ func main() {
 	incremento := 0
 	gs := 100
 	wg.Add(gs)
+	var m sync.Mutex
 
 	for i := 0; i < gs; i++ {
 		go func() {
+			m.Lock()
 			v := incremento
-			runtime.Gosched()
 			v++
 			incremento = v
 			fmt.Println(incremento)
+			m.Unlock()
 			wg.Done()
 		}()
 	}
