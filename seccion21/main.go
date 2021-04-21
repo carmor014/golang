@@ -3,11 +3,9 @@ package main
 import "fmt"
 
 func main() {
-	ca := make(chan int)
+	ca := make(chan int, 1) //pueda dejar en el canal un valor
 
-	go func() {
-		ca <- 42
-	}()
+	ca <- 42
 
 	fmt.Println(<-ca)
 }
