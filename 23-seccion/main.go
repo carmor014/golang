@@ -1,22 +1,29 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 )
 
 func main() {
-	_, err := os.Open("sin-archivo.txt")
+	f, err := os.Create("log.txt")
 	if err != nil {
-		//		fmt.Println("err happened", err)
+		fmt.Println(err)
+	}
+	defer f.Close()
+	log.SetOutput(f)
+
+	f2, err := os.Open("sin-archivo.txt")
+	if err != nil {
+		//		fmt.Println("un error ocurrió", err)
 		log.Println("un error ocurrió", err)
 		//		log.Fatalln(err)
 		//		panic(err)
 	}
+	defer f2.Close()
+
+	fmt.Println("Revisa el archivo log.txt en el directorio.")
 }
 
-/*
-El paquete log implementa un paquete simple de logging ... escribe a standard error e imprime la fecha y hora de cada mensaje logueado...
-*/
-
-// log.Println llama a Output a imprimir a el logger estándar. Los argumentos son manejados de la misma manera que en fmt.Println.
+// Println llama Output para imprimir al logger estándar. Los argumentos son manejados de igual manera que en fmt.Println.
