@@ -7,7 +7,7 @@ import (
 func main() {
 	par := make(chan int)
 	impar := make(chan int)
-	salir := make(chan bool)
+	salir := make(chan int)
 
 	go enviar(par, impar, salir)
 
@@ -17,8 +17,8 @@ func main() {
 }
 
 // send channel (canal para enviar)
-func enviar(par, impar chan<- int, salir chan<- bool) {
-	for i := 0; i < 100; i++ {
+func enviar(par, impar, salir chan<- int) {
+	for i := 0; i < 10; i++ {
 		if i%2 == 0 {
 			par <- i
 		} else {
@@ -29,7 +29,7 @@ func enviar(par, impar chan<- int, salir chan<- bool) {
 }
 
 // receive channel (canal para recibir)
-func recibir(par, impar <-chan int, salir <-chan bool) {
+func recibir(par, impar, salir <-chan int) {
 	for {
 		select {
 		case v := <-par:
@@ -38,10 +38,10 @@ func recibir(par, impar <-chan int, salir <-chan bool) {
 			fmt.Println("El valor recibido del canal impar:", v)
 		case i, ok := <-salir:
 			if !ok {
-				fmt.Println("desde comma ok", i)
+				fmt.Println("desde comma ok", i, ok)
 				return
 			} else {
-				fmt.Println("desde comma ok", i)
+				fmt.Println("desde comma ok", ok)
 			}
 		}
 	}
