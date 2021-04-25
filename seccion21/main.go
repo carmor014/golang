@@ -3,18 +3,22 @@ package main
 import (
 	"context"
 	"fmt"
-	"time"
 )
 
 func main() {
-	ctx, cancel := context.WithTimeout(context.Background(), 50*time.Millisecond)
-	defer cancel()
+	ctx := context.WithValue(context.Background(), "lenguaje", "Go")
+	foo(ctx, "lenguaje")
 
-	select {
-	case <-time.After(1 * time.Second):
-		fmt.Println("ya durmiendo")
-	case <-ctx.Done():
-		fmt.Println(ctx.Err()) // prints "context deadline exceeded"
+	ctx = context.WithValue(ctx, "perro", "Gaston")
+	foo(ctx, "perro")
+
+	foo(ctx, "color")
+}
+
+func foo(ctx context.Context, s string) {
+	if v := ctx.Value(s); v != nil {
+		fmt.Println("valor encontrado:", v)
+		return
 	}
-
+	fmt.Println("llave no encontrada:", s)
 }
