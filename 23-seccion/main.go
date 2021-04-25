@@ -14,7 +14,8 @@ func main() {
 
 func sqrt(f float64) (float64, error) {
 	if f < 0 {
-		return 0, fmt.Errorf("de matemática elemental: no hay raíz cuadrada real de un número negativo: %v", f)
+		ErrMath := fmt.Errorf("de matemática elemental: no hay raíz cuadrada real de un número negativo: %v", f)
+		return 0, ErrMath
 	}
 	return 42, nil
 }
