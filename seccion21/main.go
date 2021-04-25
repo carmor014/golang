@@ -19,7 +19,7 @@ func main() {
 		fmt.Println(v)
 	}
 
-	fmt.Println("about to exit")
+	fmt.Println("Finalizando.")
 }
 
 func agregar(c chan int) {
@@ -31,12 +31,18 @@ func agregar(c chan int) {
 
 func fanOutIn(c1, c2 chan int) {
 	var wg sync.WaitGroup
-	for v := range c1 {
-		wg.Add(1)
-		go func(v2 int) {
-			c2 <- trabajoConsumeTiempo(v2)
+	const gorutinas = 10
+	wg.Add(gorutinas)
+
+	for i := 0; i < gorutinas; i++ {
+		go func() {
+			for v := range c1 {
+				func(v2 int) {
+					c2 <- trabajoConsumeTiempo(v2)
+				}(v)
+			}
 			wg.Done()
-		}(v)
+		}()
 	}
 	wg.Wait()
 	close(c2)
