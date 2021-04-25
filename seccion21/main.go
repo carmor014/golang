@@ -7,16 +7,14 @@ import (
 )
 
 func main() {
-	d := time.Now().Add(50 * time.Millisecond)
-	ctx, cancel := context.WithDeadline(context.Background(), d)
-
+	ctx, cancel := context.WithTimeout(context.Background(), 50*time.Millisecond)
 	defer cancel()
 
 	select {
 	case <-time.After(1 * time.Second):
-		fmt.Println("overslept")
+		fmt.Println("ya durmiendo")
 	case <-ctx.Done():
-		fmt.Println(ctx.Err())
+		fmt.Println(ctx.Err()) // prints "context deadline exceeded"
 	}
 
 }
