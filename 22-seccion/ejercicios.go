@@ -5,11 +5,13 @@ import (
 )
 
 func main() {
-	c := make(chan int)
+	cr := make(chan int)
 
 	go func() {
-		c <- 42
+		cr <- 42
 	}()
+	fmt.Println(<-cr)
 
-	fmt.Println(<-c)
+	fmt.Printf("------\n")
+	fmt.Printf("cr\t%T\n", cr)
 }
