@@ -1,29 +1,20 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"log"
+)
 
 func main() {
-	f()
-	fmt.Println("Returned normally from f.")
-}
-
-func f() {
-	defer func() {
-		if r := recover(); r != nil {
-			fmt.Println("Recovered in f", r)
-		}
-	}()
-	fmt.Println("Calling g.")
-	g(0)
-	fmt.Println("Returned normally from g.")
-}
-
-func g(i int) {
-	if i > 3 {
-		fmt.Println("Panicking!")
-		panic(fmt.Sprintf("%v", i))
+	_, err := sqrt(-10)
+	if err != nil {
+		log.Fatalln(err)
 	}
-	defer fmt.Println("Defer in g", i)
-	fmt.Println("Printing in g", i)
-	g(i + 1)
+}
+
+func sqrt(f float64) (float64, error) {
+	if f < 0 {
+		return 0, errors.New("de matemática elemental: no hay raíz cuadrada real de un número negativo")
+	}
+	return 42, nil
 }
