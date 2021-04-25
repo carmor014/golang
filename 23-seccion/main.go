@@ -7,23 +7,22 @@ import (
 )
 
 func main() {
-	f, err := os.Create("log.txt")
+	defer foo()
+	_, err := os.Open("sin-archivo.txt")
 	if err != nil {
-		fmt.Println(err)
-	}
-	defer f.Close()
-	log.SetOutput(f)
-
-	f2, err := os.Open("sin-archivo.txt")
-	if err != nil {
-		//		fmt.Println("un error ocurrió", err)
-		log.Println("un error ocurrió", err)
-		//		log.Fatalln(err)
+		//		fmt.Println("err happened", err)
+		//		log.Println("err happened", err)
+		log.Fatalln(err)
 		//		panic(err)
 	}
-	defer f2.Close()
-
-	fmt.Println("Revisa el archivo log.txt en el directorio.")
 }
 
-// Println llama Output para imprimir al logger estándar. Los argumentos son manejados de igual manera que en fmt.Println.
+func foo() {
+	fmt.Println("Cuando os.Exit() es llamada, las funciones diferidas no corren")
+}
+
+/*
+... las funciones de Fatal llaman a os.Exit(1) después de escribir el mensaje del log ...
+*/
+
+// Fatalln es quivalente a Println() seguido por una llamada a os.Exit(1).
