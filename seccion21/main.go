@@ -1,54 +1,41 @@
 package main
 
 import (
+	"context"
 	"fmt"
-	"math/rand"
-	"sync"
+	"runtime"
 	"time"
 )
 
 func main() {
-	c1 := make(chan int)
-	c2 := make(chan int)
+	ctx, cancel := context.WithCancel(context.Background())
 
-	go agregar(c1)
+	fmt.Println("chqueo de error 1:", ctx.Err())
+	fmt.Println("num gorutinas 1:", runtime.NumGoroutine())
 
-	go fanOutIn(c1, c2)
-
-	for v := range c2 {
-		fmt.Println(v)
-	}
-
-	fmt.Println("Finalizando.")
-}
-
-func agregar(c chan int) {
-	for i := 0; i < 100; i++ {
-		c <- i
-	}
-	close(c)
-}
-
-func fanOutIn(c1, c2 chan int) {
-	var wg sync.WaitGroup
-	const gorutinas = 10
-	wg.Add(gorutinas)
-
-	for i := 0; i < gorutinas; i++ {
-		go func() {
-			for v := range c1 {
-				func(v2 int) {
-					c2 <- trabajoConsumeTiempo(v2)
-				}(v)
+	go func() {
+		n := 0
+		for {
+			select {
+			case <-ctx.Done():
+				return
+			default:
+				n++
+				time.Sleep(time.Millisecond * 200)
+				fmt.Println("Trabajando", n)
 			}
-			wg.Done()
-		}()
-	}
-	wg.Wait()
-	close(c2)
-}
+		}
+	}()
 
-func trabajoConsumeTiempo(n int) int {
-	time.Sleep(time.Microsecond * time.Duration(rand.Intn(500)))
-	return n + rand.Intn(1000)
+	time.Sleep(time.Second * 2)
+	fmt.Println("chequeo de error:", ctx.Err())
+	fmt.Println("num gorutinas 2:", runtime.NumGoroutine())
+
+	fmt.Println("A punto de cancelar context.")
+	cancel()
+	fmt.Println("context cancelado.")
+
+	time.Sleep(time.Second * 2)
+	fmt.Println("chequeo de error 3:", ctx.Err())
+	fmt.Println("num gorutinas 3:", runtime.NumGoroutine())
 }
