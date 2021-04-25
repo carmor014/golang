@@ -1,46 +1,48 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
 	par := make(chan int)
 	impar := make(chan int)
-	salir := make(chan int)
+	salir := make(chan bool)
 
-	//enviar
 	go enviar(par, impar, salir)
 
-	//recibir
 	recibir(par, impar, salir)
-	fmt.Println("Finalizado")
 
+	fmt.Println("Finalizar.")
 }
 
-//Enviar
-func enviar(p, i, s chan<- int) {
-	for j := 0; j < 100; j++ {
-		if j%2 == 0 {
-			p <- j
+// send channel (canal para enviar)
+func enviar(par, impar chan<- int, salir chan<- bool) {
+	for i := 0; i < 100; i++ {
+		if i%2 == 0 {
+			par <- i
 		} else {
-			i <- j
+			impar <- i
 		}
 	}
-
-	s <- 0
+	close(salir)
 }
 
-//Recibir
-func recibir(p, i, s <-chan int) {
-	//hacemos un for infinito y lo rompemos segun las condiciones
+// receive channel (canal para recibir)
+func recibir(par, impar <-chan int, salir <-chan bool) {
 	for {
 		select {
-		case v := <-p:
-			fmt.Println("Desde el canal par:", v)
-		case v := <-i:
-			fmt.Println("Desde el canal impar:", v)
-		case v := <-s:
-			fmt.Println("Desde el canal salir:", v)
-			return
+		case v := <-par:
+			fmt.Println("El valor recibido del canal par:", v)
+		case v := <-impar:
+			fmt.Println("El valor recibido del canal impar:", v)
+		case i, ok := <-salir:
+			if !ok {
+				fmt.Println("desde comma ok", i)
+				return
+			} else {
+				fmt.Println("desde comma ok", i)
+			}
 		}
 	}
 }
