@@ -5,25 +5,33 @@ import (
 )
 
 func main() {
-	c := gen()
-	recibir(c)
+	salir := make(chan int)
+	c := gen(salir)
+
+	recibir(c, salir)
 
 	fmt.Println("A punto de finalizar.")
 }
 
-func recibir(c <-chan int) {
-	for v := range c {
-		fmt.Println(v)
+func recibir(c, salir <-chan int) {
+	for {
+		select {
+		case v := <-c:
+			fmt.Println(v)
+		case <-salir:
+			return
+		}
 	}
 }
 
-func gen() <-chan int {
+func gen(salir chan<- int) <-chan int {
 	c := make(chan int)
 
 	go func() {
 		for i := 0; i < 10; i++ {
 			c <- i
 		}
+		salir <- 1
 		close(c)
 	}()
 
