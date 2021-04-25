@@ -2,24 +2,31 @@ package main
 
 import (
 	"fmt"
+	"log"
 )
 
-type errorPer struct {
-	info string
+type raizError struct {
+	lat  string
+	long string
+	err  error
 }
 
-func (ep errorPer) Error() string {
-	return fmt.Sprintf("aquí está el error: %v", ep.info)
+func (re raizError) Error() string {
+	return fmt.Sprintf("error matemático: %v %v %v", re.lat, re.long, re.err)
 }
 
 func main() {
-	e1 := errorPer{
-		info: "necesito dormir más",
+	_, err := raiz(-10.23)
+	if err != nil {
+		log.Println(err)
 	}
-
-	foo(e1)
 }
 
-func foo(e error) {
-	fmt.Println("foo corrió -", e, "\n", e.(errorPer).info)
+func raiz(f float64) (float64, error) {
+	if f < 0 {
+		// e := errors.New("necesito dormir más")
+		e := fmt.Errorf("necesito dormir más - el valor fue %v", f)
+		return 0, raizError{"50.2289 N", "99.4656 W", e}
+	}
+	return 42, nil
 }
