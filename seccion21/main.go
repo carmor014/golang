@@ -3,32 +3,20 @@ package main
 import (
 	"context"
 	"fmt"
+	"time"
 )
 
 func main() {
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel() // cancela cuando hemos finalizado
+	d := time.Now().Add(50 * time.Millisecond)
+	ctx, cancel := context.WithDeadline(context.Background(), d)
 
-	for n := range gen(ctx) {
-		fmt.Println(n)
-		if n == 5 {
-			break
-		}
+	defer cancel()
+
+	select {
+	case <-time.After(1 * time.Second):
+		fmt.Println("overslept")
+	case <-ctx.Done():
+		fmt.Println(ctx.Err())
 	}
-}
 
-func gen(ctx context.Context) <-chan int {
-	dst := make(chan int)
-	n := 1
-	go func() {
-		for {
-			select {
-			case <-ctx.Done():
-				return // retornando para que no se fuge la gorutina
-			case dst <- n:
-				n++
-			}
-		}
-	}()
-	return dst
 }
