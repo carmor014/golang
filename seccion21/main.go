@@ -2,57 +2,50 @@ package main
 
 import (
 	"fmt"
-	"sync"
+	"math/rand"
+	"time"
 )
 
 func main() {
-	par := make(chan int)
-	impar := make(chan int)
-	fanin := make(chan int)
-
-	go enviar(par, impar)
-
-	go recibir(par, impar, fanin)
-
-	for v := range fanin {
-		fmt.Println(v)
-	}
-
-	fmt.Println("Finalizando.")
-}
-
-// send channel
-func enviar(par, impar chan<- int) {
+	c := fanIn(boring("Joe"), boring("Ann"))
 	for i := 0; i < 10; i++ {
-		if i%2 == 0 {
-			par <- i
-		} else {
-			impar <- i
-		}
+		fmt.Println(<-c)
 	}
-	close(par)
-	close(impar)
+	fmt.Println("You're both boring; I'm leaving.")
 }
 
-// receive channel
-func recibir(par, impar <-chan int, fanin chan<- int) {
-	var wg sync.WaitGroup
-	wg.Add(2)
-
+func boring(msg string) <-chan string {
+	c := make(chan string)
 	go func() {
-		for v := range par {
-			fanin <- v
+		for i := 0; ; i++ {
+			c <- fmt.Sprintf("%s %d", msg, i)
+			time.Sleep(time.Duration(rand.Intn(1e3)) * time.Millisecond)
 		}
-		wg.Done()
 	}()
-
-	go func() {
-		for v := range impar {
-			fanin <- v
-		}
-		wg.Done()
-	}()
-
-	wg.Wait()
-	close(fanin)
+	return c
 }
+
+// FAN IN
+func fanIn(input1, input2 <-chan string) <-chan string {
+	c := make(chan string)
+	go func() {
+		for {
+			c <- <-input1
+		}
+	}()
+	go func() {
+		for {
+			c <- <-input2
+		}
+	}()
+	return c
+}
+
+/*
+code source:
+Rob Pike
+https://talks.golang.org/2012/concurrency.slide#25
+
+source:
+https://blog.golang.org/pipelines
+*/
