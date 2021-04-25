@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 )
@@ -31,7 +32,8 @@ func main() {
 func aJSON(a interface{}) ([]byte, error) {
 	bs, err := json.Marshal(a)
 	if err != nil {
-		return []byte{}, fmt.Errorf("Hubo un error en aJSON: %v", err)
+		// return []byte{}, fmt.Errorf("Hubo un error en aJSON: %v", err)
+		return []byte{}, errors.New(fmt.Sprintf("Hubo un error en aJSON %v", err))
 	}
 	return bs, nil
 }
