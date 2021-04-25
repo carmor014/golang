@@ -3,39 +3,32 @@ package main
 import (
 	"context"
 	"fmt"
-	"runtime"
-	"time"
 )
 
 func main() {
 	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel() // cancela cuando hemos finalizado
 
-	fmt.Println("chqueo de error 1:", ctx.Err())
-	fmt.Println("num gorutinas 1:", runtime.NumGoroutine())
+	for n := range gen(ctx) {
+		fmt.Println(n)
+		if n == 5 {
+			break
+		}
+	}
+}
 
+func gen(ctx context.Context) <-chan int {
+	dst := make(chan int)
+	n := 1
 	go func() {
-		n := 0
 		for {
 			select {
 			case <-ctx.Done():
-				return
-			default:
+				return // retornando para que no se fuge la gorutina
+			case dst <- n:
 				n++
-				time.Sleep(time.Millisecond * 200)
-				fmt.Println("Trabajando", n)
 			}
 		}
 	}()
-
-	time.Sleep(time.Second * 2)
-	fmt.Println("chequeo de error:", ctx.Err())
-	fmt.Println("num gorutinas 2:", runtime.NumGoroutine())
-
-	fmt.Println("A punto de cancelar context.")
-	cancel()
-	fmt.Println("context cancelado.")
-
-	time.Sleep(time.Second * 2)
-	fmt.Println("chequeo de error 3:", ctx.Err())
-	fmt.Println("num gorutinas 3:", runtime.NumGoroutine())
+	return dst
 }
