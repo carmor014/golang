@@ -6,24 +6,32 @@ import (
 	"log"
 )
 
-type person struct {
-	First   string
-	Last    string
-	Sayings []string
+type persona struct {
+	Nombre   string
+	Apellido string
+	Frases   []string
 }
 
 func main() {
-	p1 := person{
-		First:   "James",
-		Last:    "Bond",
-		Sayings: []string{"Shaken, not stirred", "Any last wishes?", "Never say never"},
+	p1 := persona{
+		Nombre:   "James",
+		Apellido: "Bond",
+		Frases:   []string{"Shaken, not stirred", "¿Algún último deseo?", "Nunca digas nunca."},
 	}
 
-	bs, err := json.Marshal(p1)
+	bs, err := aJSON(p1)
 	if err != nil {
-		log.Println(err)
-		return
+		log.Fatalln(err)
 	}
-	fmt.Println(string(bs))
 
+	fmt.Println(string(bs))
+}
+
+// aJSON también necesita retorna un error
+func aJSON(a interface{}) ([]byte, error) {
+	bs, err := json.Marshal(a)
+	if err != nil {
+		return []byte{}, fmt.Errorf("Hubo un error en aJSON: %v", err)
+	}
+	return bs, nil
 }
